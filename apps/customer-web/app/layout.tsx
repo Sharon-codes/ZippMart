@@ -3,8 +3,8 @@ import type { ReactNode } from "react";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "ProFlo",
-  description: "Fashion & merchandising at the speed of scan."
+  title: "ProFlo — Smart Checkout. Smooth Flow.",
+  description: "Retail scan-and-go, operations HQ, and counter verification at proflotech.com."
 };
 
 export const viewport: Viewport = {

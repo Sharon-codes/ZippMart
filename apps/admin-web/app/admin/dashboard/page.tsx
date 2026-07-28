@@ -7,6 +7,7 @@ import { OverviewSection } from "../../components/admin/OverviewSection";
 import { BarcodeCameraScanner } from "../../components/BarcodeCameraScanner";
 import { OrderReceiptModal } from "../../components/OrderReceiptModal";
 import { StockAdjustModal } from "../../components/StockAdjustModal";
+import { ProFloLogo } from "../../components/ProFloLogo";
 import type { PaidReceipt } from "../../../lib/receipt";
 import { adminFetchHeaders, clearAdminToken, getAdminRole, getAdminToken } from "../../../lib/adminAuth";
 import {
@@ -977,10 +978,8 @@ export default function AdminDashboardPage() {
       <div className="adminContainer">
         <div className="adminMobileHeader">
           <div className="adminSidebar__brand">
-            <span className="brandZipp">Pro</span>
-            <span className="brandMart">Flo</span>
+            <ProFloLogo size={28} showText />
           </div>
-          <button
             type="button"
             className="adminMobileHeader__toggle"
             onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
@@ -991,11 +990,8 @@ export default function AdminDashboardPage() {
         </div>
         <aside className={`adminSidebar ${mobileSidebarOpen ? "adminSidebar--open" : ""}`}>
           <div className="adminSidebar__brand">
-            <span className="brandZipp">Pro</span>
-            <span className="brandMart">Flo</span>
+            <ProFloLogo size={32} showText />
           </div>
-
-          <div className="adminSidebar__meta">
             <div className="adminRolePill">
               {isManager ? "Manager Console" : "Staff Console"}
             </div>

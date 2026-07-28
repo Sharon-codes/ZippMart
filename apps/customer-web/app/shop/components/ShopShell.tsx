@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { ProFloLogo } from "./shop/components/ProFloLogo";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { useShop, apiBase, type RecommendationProduct } from "../context/ShopContext";
@@ -207,8 +208,7 @@ export function ShopShell({ children }: { children: ReactNode }) {
           {isHome ? (
             <>
               <Link href="/shop" className="siteHeader__brand" aria-label="ProFlo home">
-                <span className="brandZipp">Pro</span>
-                <span className="brandMart">Flo</span>
+                <ProFloLogo size={28} showText />
               </Link>
               <nav className="siteHeader__nav" aria-label="Shop sections">
                 <Link href="/shop/scan" className="siteHeader__pill">

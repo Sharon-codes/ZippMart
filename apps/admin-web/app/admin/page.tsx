@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { getAdminToken, setAdminSession } from "../../lib/adminAuth";
+import { ProFloLogo } from "../../components/ProFloLogo";
 
 import { apiBase } from "../../lib/api";
 
@@ -49,7 +50,8 @@ export default function AdminLoginPage() {
   return (
     <main className="loginPage">
       <div className="loginCard">
-        <h1 className="loginTitle">ProFlo HQ</h1>
+        <ProFloLogo size={40} showText />
+        <h1 className="loginTitle">Sign in</h1>
         <p className="loginHint">Sign in to the operations console</p>
 
         <form onSubmit={(e) => void onSubmit(e)} className="loginForm">

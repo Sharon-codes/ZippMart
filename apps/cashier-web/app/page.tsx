@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
+import { ProFloLogo } from "./components/ProFloLogo";
 import { apiBase, cashierHeaders } from "../lib/api";
 const RECENT_KEY = "proflo-cashier-recent";
 const MAX_RECENT = 8;
@@ -193,8 +194,8 @@ export default function CashierHomePage() {
   return (
     <div className="shell">
       <header className="header">
-        <p className="header__eyebrow">ProFlo</p>
-        <h1 className="header__title">Counter</h1>
+        <ProFloLogo size={32} showText />
+        <h1 className="header__title">Counter terminal</h1>
         <p className="header__sub">
           Look up queue tokens or order IDs, verify the basket, then settle cash or card at the till.
         </p>
