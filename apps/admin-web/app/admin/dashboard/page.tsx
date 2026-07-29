@@ -980,6 +980,7 @@ export default function AdminDashboardPage() {
           <div className="adminSidebar__brand">
             <ProFloLogo size={28} showText />
           </div>
+          <button
             type="button"
             className="adminMobileHeader__toggle"
             onClick={() => setMobileSidebarOpen(!mobileSidebarOpen)}
@@ -992,6 +993,7 @@ export default function AdminDashboardPage() {
           <div className="adminSidebar__brand">
             <ProFloLogo size={32} showText />
           </div>
+          <div className="adminSidebar__meta">
             <div className="adminRolePill">
               {isManager ? "Manager Console" : "Staff Console"}
             </div>

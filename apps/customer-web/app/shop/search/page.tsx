@@ -4,9 +4,11 @@ import { useRouter } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { fetchBrowseSuggestions, fetchPopularProducts } from "../../../lib/supabase/catalog";
 import { ProductPreviewModal } from "../components/ProductPreviewModal";
+import { ProductCard } from "../components/ProductCard";
 import { useShop, type RecommendationProduct } from "../context/ShopContext";
-import { productPlaceholderDataUri } from "../lib/productPlaceholder";
-import { resolveProductImageUrl } from "../../../lib/productImage";
+import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
+import { Search, X, Sparkles } from "lucide-react";
 
 const SUGGEST_DEBOUNCE_MS = 240;
 
@@ -17,7 +19,6 @@ export default function SearchPage() {
   const [suggestions, setSuggestions] = useState<RecommendationProduct[]>([]);
   const [suggestOpen, setSuggestOpen] = useState(false);
   const [suggestLoading, setSuggestLoading] = useState(false);
-  const [activeIndex, setActiveIndex] = useState(-1);
   const [preview, setPreview] = useState<RecommendationProduct | null>(null);
   const [popular, setPopular] = useState<RecommendationProduct[]>([]);
   const [popularLoading, setPopularLoading] = useState(true);
@@ -34,7 +35,7 @@ export default function SearchPage() {
     let cancelled = false;
     void (async () => {
       setPopularLoading(true);
-      const items = await fetchPopularProducts(5);
+      const items = await fetchPopularProducts(8);
       if (!cancelled) {
         setPopular(items);
         setPopularLoading(false);
@@ -51,7 +52,6 @@ export default function SearchPage() {
     if (!term) {
       setSuggestions([]);
       setSuggestLoading(false);
-      setActiveIndex(-1);
       return;
     }
 
@@ -63,7 +63,6 @@ export default function SearchPage() {
         if (!cancelled) {
           setSuggestions(data);
           setSuggestLoading(false);
-          setActiveIndex(-1);
         }
       })();
     }, SUGGEST_DEBOUNCE_MS);
@@ -74,172 +73,133 @@ export default function SearchPage() {
     };
   }, [q, hydrated, sessionId]);
 
-  useEffect(() => {
-    function onDocMouseDown(e: MouseEvent) {
-      const el = wrapRef.current;
-      if (!el || el.contains(e.target as Node)) return;
-      setSuggestOpen(false);
-    }
-    document.addEventListener("mousedown", onDocMouseDown);
-    return () => document.removeEventListener("mousedown", onDocMouseDown);
-  }, []);
-
-  const pickProduct = useCallback((p: RecommendationProduct) => {
-    setPreview(p);
-    setSuggestOpen(false);
-    setActiveIndex(-1);
-  }, []);
-
-  async function handleAdd(barcode: string, qty: number) {
-    const ok = await addToCart(barcode, qty);
-    if (ok) setMessage("Updated bag");
-  }
-
-  function onKeyDown(e: React.KeyboardEvent<HTMLInputElement>) {
-    if (!suggestOpen || suggestions.length === 0) {
-      if (e.key === "Escape") setSuggestOpen(false);
-      return;
-    }
-    if (e.key === "ArrowDown") {
-      e.preventDefault();
-      setActiveIndex((i) => (i + 1) % suggestions.length);
-    } else if (e.key === "ArrowUp") {
-      e.preventDefault();
-      setActiveIndex((i) => (i <= 0 ? suggestions.length - 1 : i - 1));
-    } else if (e.key === "Enter" && activeIndex >= 0 && suggestions[activeIndex]) {
-      e.preventDefault();
-      pickProduct(suggestions[activeIndex]);
-    } else if (e.key === "Escape") {
-      setSuggestOpen(false);
-    }
-  }
-
   if (!hydrated || !sessionId) {
     return (
-      <main className="pageCanvas">
-        <div className="skeletonLine skeletonLine--wide" style={{ marginTop: 24 }} />
-      </main>
+      <div className="max-w-md mx-auto py-12 text-center">
+        <div className="w-12 h-12 rounded-full border-2 border-blue-600 border-t-transparent animate-spin mx-auto mb-4" />
+        <p className="text-sm font-medium text-slate-500">Loading catalogue search...</p>
+      </div>
     );
   }
 
   const trimmed = q.trim();
-  const showPanel = suggestOpen && trimmed.length > 0;
 
   return (
-    <>
-      <main className="pageCanvas pageCanvas--browse">
-        <p className="browseIntro">
-          Search by product name, category, or barcode. Pick a match to view details and add to your bag.
+    <div className="max-w-5xl mx-auto py-4 px-2">
+      {/* Header Info */}
+      <div className="text-center mb-6">
+        <Badge variant="outline" className="bg-blue-50 text-blue-600 border-blue-200 mb-2 font-bold px-3 py-1">
+          CATALOGUE BROWSER
+        </Badge>
+        <h1 className="text-2xl font-extrabold font-display text-slate-900 mb-1">
+          Search Apparel &amp; Collections
+        </h1>
+        <p className="text-xs text-slate-500 max-w-sm mx-auto">
+          Type any product name, category, or barcode to view live shelf availability.
         </p>
+      </div>
 
-        <div className="searchWrap" ref={wrapRef}>
-          <div className="searchField">
-            <span className="searchField__icon" aria-hidden>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                <circle cx="11" cy="11" r="6.5" stroke="currentColor" strokeWidth="1.75" />
-                <path d="M20 20l-4.2-4.2" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" />
-              </svg>
-            </span>
-            <input
-              ref={inputRef}
-              className="searchField__input"
-              placeholder="Type to search…"
-              value={q}
-              onChange={(e) => {
-                setQ(e.target.value);
-                setSuggestOpen(true);
+      {/* Hero Integrated Search Bar */}
+      <div className="relative max-w-xl mx-auto mb-8" ref={wrapRef}>
+        <div className="relative flex items-center">
+          <Search className="absolute left-3.5 w-4 h-4 text-slate-400 pointer-events-none" />
+          <Input
+            ref={inputRef}
+            className="pl-10 pr-10 h-12 text-sm bg-white border-slate-300 rounded-full shadow-sm focus-visible:ring-blue-600"
+            placeholder="Search by product name, category, or barcode..."
+            value={q}
+            onChange={(e) => {
+              setQ(e.target.value);
+              setSuggestOpen(true);
+            }}
+          />
+          {q && (
+            <button
+              type="button"
+              className="absolute right-3.5 p-1 text-slate-400 hover:text-slate-600 rounded-full"
+              onClick={() => {
+                setQ("");
+                setSuggestions([]);
               }}
-              onFocus={() => setSuggestOpen(true)}
-              onKeyDown={onKeyDown}
-              autoComplete="off"
-              autoCorrect="off"
-              spellCheck={false}
-              aria-autocomplete="list"
-              aria-expanded={showPanel}
-              aria-controls="browse-suggest-list"
-              aria-activedescendant={activeIndex >= 0 ? `browse-suggest-${activeIndex}` : undefined}
-              autoFocus
-            />
-            {suggestLoading ? <span className="searchField__spinner" aria-hidden /> : null}
+            >
+              <X className="w-4 h-4" />
+            </button>
+          )}
+        </div>
+      </div>
+
+      {/* Search Results or Popular Items */}
+      {trimmed.length > 0 ? (
+        <section className="mb-10">
+          <h2 className="text-sm font-extrabold text-slate-900 uppercase tracking-wider mb-4">
+            Search Results ({suggestions.length})
+          </h2>
+          {suggestLoading ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              {[1, 2, 3, 4].map((n) => (
+                <div key={n} className="h-64 rounded-2xl bg-slate-100 animate-pulse" />
+              ))}
+            </div>
+          ) : suggestions.length > 0 ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              {suggestions.map((p) => (
+                <ProductCard
+                  key={p.id}
+                  product={p}
+                  disabled={!sessionId || loading}
+                  loading={loading}
+                  onAdd={(bc, qty) => void addToCart(bc, qty)}
+                  onOpen={(p) => setPreview(p)}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="text-center py-12 bg-white rounded-2xl border border-slate-200">
+              <p className="text-sm font-bold text-slate-800 mb-1">No products found matching &quot;{q}&quot;</p>
+              <p className="text-xs text-slate-500">Try searching for &quot;Blouse&quot;, &quot;Sweater&quot;, or &quot;Jacket&quot;.</p>
+            </div>
+          )}
+        </section>
+      ) : (
+        <section className="mb-10">
+          <div className="flex items-center gap-2 mb-4">
+            <Sparkles className="w-4 h-4 text-blue-600" />
+            <h2 className="text-sm font-extrabold text-slate-900 uppercase tracking-wider">
+              Popular Right Now
+            </h2>
           </div>
 
-          {showPanel ? (
-            <div className="searchSuggest" id="browse-suggest-list" role="listbox" aria-label="Product suggestions">
-              {suggestions.length === 0 && !suggestLoading ? (
-                <p className="searchSuggest__empty">No products match that — try another spelling or barcode.</p>
-              ) : (
-                <ul className="searchSuggest__list" role="none">
-                  {suggestions.map((p, idx) => (
-                    <li key={p.id} role="none">
-                      <button
-                        type="button"
-                        id={`browse-suggest-${idx}`}
-                        role="option"
-                        aria-selected={idx === activeIndex}
-                        className={`searchSuggest__row${idx === activeIndex ? " searchSuggest__row--active" : ""}`}
-                        onMouseEnter={() => setActiveIndex(idx)}
-                        onClick={() => pickProduct(p)}
-                      >
-                        <span className="searchSuggest__name">{p.name}</span>
-                        {p.category ? <span className="searchSuggest__meta">{p.category}</span> : null}
-                        <span className="searchSuggest__price">₹{p.unitPrice}</span>
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              )}
+          {popularLoading ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              {[1, 2, 3, 4].map((n) => (
+                <div key={n} className="h-64 rounded-2xl bg-slate-100 animate-pulse" />
+              ))}
             </div>
-          ) : null}
-        </div>
-
-        {!trimmed ? (
-          <section className="browsePopular" aria-label="Popular products">
-            <h3 className="browsePopular__title">Popular right now</h3>
-            {popularLoading ? (
-              <p className="browsePopular__loading">Loading picks…</p>
-            ) : popular.length === 0 ? (
-              <p className="browsePopular__empty">Start typing above to find products.</p>
-            ) : (
-              <ul className="browsePopular__list">
-                {popular.map((p) => {
-                  const imageSrc = resolveProductImageUrl(p.imageUrl);
-                  return (
-                    <li key={p.id}>
-                      <button type="button" className="browsePopular__row" onClick={() => pickProduct(p)}>
-                        <span className="browsePopular__thumb" aria-hidden>
-                          {imageSrc ? (
-                            // eslint-disable-next-line @next/next/no-img-element
-                            <img src={imageSrc} alt="" className="browsePopular__img" />
-                          ) : (
-                            // eslint-disable-next-line @next/next/no-img-element
-                            <img src={productPlaceholderDataUri(p)} alt="" className="browsePopular__img browsePopular__img--ph" />
-                          )}
-                        </span>
-                        <span className="browsePopular__body">
-                          <span className="browsePopular__name">{p.name}</span>
-                          {p.category ? <span className="browsePopular__meta">{p.category}</span> : null}
-                        </span>
-                        <span className="browsePopular__price">₹{p.unitPrice}</span>
-                      </button>
-                    </li>
-                  );
-                })}
-              </ul>
-            )}
-          </section>
-        ) : null}
-
-        {message ? <div className="toast">{message}</div> : null}
-      </main>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              {popular.map((p) => (
+                <ProductCard
+                  key={p.id}
+                  product={p}
+                  disabled={!sessionId || loading}
+                  loading={loading}
+                  onAdd={(bc, qty) => void addToCart(bc, qty)}
+                  onOpen={(p) => setPreview(p)}
+                />
+              ))}
+            </div>
+          )}
+        </section>
+      )}
 
       <ProductPreviewModal
         product={preview}
         open={Boolean(preview)}
         onClose={() => setPreview(null)}
-        disabled={loading}
+        disabled={!sessionId || loading}
         loading={loading}
-        onAdd={(bc, qty) => void handleAdd(bc, qty)}
+        onAdd={(bc, qty) => void addToCart(bc, qty)}
       />
-    </>
+    </div>
   );
 }

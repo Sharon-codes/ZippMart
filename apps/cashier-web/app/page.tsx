@@ -193,15 +193,28 @@ export default function CashierHomePage() {
 
   return (
     <div className="shell">
-      <header className="header">
-        <ProFloLogo size={32} showText />
-        <h1 className="header__title">Counter terminal</h1>
-        <p className="header__sub">
-          Look up queue tokens or order IDs, verify the basket, then settle cash or card at the till.
-        </p>
-        <Link href="/gate" className="gateBack">
-          Exit gate scanner →
+      {/* ── Navy top bar ── */}
+      <header className="shell__topbar">
+        <div className="shell__topbarBrand">
+          <ProFloLogo size={30} showText />
+          <div>
+            <div className="shell__topbarTitle">Counter Terminal</div>
+            <div className="shell__topbarSub">Cashier Workstation</div>
+          </div>
+        </div>
+        <Link href="/gate" style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "6px 14px", borderRadius: 8, border: "1px solid rgba(255,255,255,0.15)", background: "rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.75)", fontSize: 13, fontWeight: 600, textDecoration: "none" }}>
+          Gate scanner →
         </Link>
+      </header>
+
+      {/* ── Main content ── */}
+      <div style={{ flex: 1, width: "100%", maxWidth: 1360, margin: "0 auto", padding: "28px 24px 56px" }}>
+      <header className="header">
+        <p className="header__eyebrow">Cashier</p>
+        <h1 className="header__title">Order lookup</h1>
+        <p className="header__sub">
+          Look up by queue token number or full order UUID. USB barcode scanners trigger lookup automatically on Enter.
+        </p>
       </header>
 
       <div className="cashierWorkspace">
@@ -377,6 +390,7 @@ export default function CashierHomePage() {
             </div>
           )}
         </div>
+      </div>
       </div>
     </div>
   );

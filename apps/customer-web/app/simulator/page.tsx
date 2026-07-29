@@ -431,10 +431,9 @@ export default function SimulatorPage() {
 
               return updated;
             } else {
-              // Walk to another shopping rack
               const options = ["mens_wear", "womens_wear", "footwear", "accessories"].filter((z) => z !== updated.currentZone);
-              const nextZone = options[Math.floor(Math.random() * options.length)];
-              updated.currentZone = nextZone as any;
+              const nextZone = options[Math.floor(Math.random() * options.length)] as keyof typeof ZONES;
+              updated.currentZone = nextZone;
               updated.x = ZONES[nextZone].x + (Math.random() * 6 - 3);
               updated.y = ZONES[nextZone].y + (Math.random() * 8 - 4);
               updated.bubbleText = `Let's look at ${ZONES[nextZone].name}!`;

@@ -12,7 +12,7 @@ import {
   useShop,
   type RecommendationProduct
 } from "./context/ShopContext";
-import { BRAND_NAME } from "./lib/apparel";
+import { Barcode, Search, Sparkles } from "lucide-react";
 
 export default function ShopHomePage() {
   const {
@@ -28,6 +28,7 @@ export default function ShopHomePage() {
     restoreCartFromBackup,
     cart
   } = useShop();
+
   const [highDemand, setHighDemand] = useState<RecommendationProduct[]>([]);
   const [catalog, setCatalog] = useState<RecommendationProduct[]>([]);
   const [catalogLoading, setCatalogLoading] = useState(true);
@@ -35,12 +36,6 @@ export default function ShopHomePage() {
   const [category, setCategory] = useState("All");
   const [sizeFilter, setSizeFilter] = useState("All");
   const [preview, setPreview] = useState<RecommendationProduct | null>(null);
-  const [visitPhone, setVisitPhone] = useState("");
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    setVisitPhone(localStorage.getItem("proflo-visit-phone") ?? localStorage.getItem("zippmart-visit-phone") ?? localStorage.getItem("supermart-visit-phone") ?? "");
-  }, []);
 
   const loadCatalog = useCallback(async () => {
     setCatalogLoading(true);
@@ -71,25 +66,18 @@ export default function ShopHomePage() {
   }, [loadCatalog]);
 
   const categories = useMemo(() => {
-    const s = new Set<string>();
+    const defaultCats = ["All", "Apparel", "Outerwear", "Dresses", "Shoes", "Bags"];
+    const s = new Set<string>(defaultCats);
     for (const p of catalog) {
       if (p.category?.trim()) s.add(p.category.trim());
     }
-    return ["All", ...Array.from(s).sort((a, b) => a.localeCompare(b))];
-  }, [catalog]);
-
-  const sizes = useMemo(() => {
-    const s = new Set<string>();
-    for (const p of catalog) {
-      if (p.size?.trim()) s.add(p.size.trim());
-    }
-    return ["All", ...Array.from(s).sort((a, b) => a.localeCompare(b))];
+    return Array.from(s);
   }, [catalog]);
 
   const filtered = useMemo(() => {
     let list = catalog;
     if (category !== "All") {
-      list = list.filter((p) => (p.category ?? "").trim() === category);
+      list = list.filter((p) => (p.category ?? "").trim().toLowerCase() === category.toLowerCase());
     }
     if (sizeFilter !== "All") {
       list = list.filter((p) => (p.size ?? "").trim() === sizeFilter);
@@ -97,240 +85,142 @@ export default function ShopHomePage() {
     return list;
   }, [catalog, category, sizeFilter]);
 
-  async function handleAdd(barcode: string, qty: number) {
-    if (!sessionId) {
-      setMessage("Still connecting… try again in a moment.");
-      return;
-    }
-    await addToCart(barcode, qty);
-  }
-
-  async function retryConnect() {
-    setMessage("");
-    const store =
-      typeof window !== "undefined"
-        ? new URLSearchParams(window.location.search).get("store")?.trim()?.toUpperCase()
-        : undefined;
-    if (visitPhone.trim().length >= 10) {
-      localStorage.setItem("proflo-visit-phone", visitPhone.trim());
-    }
-    await createSession(store ?? "BLR001", visitPhone.trim().length >= 10 ? visitPhone.trim() : undefined);
-  }
-
-  const showConnecting = !sessionId && !sessionBootstrapDone;
-  const showConnectionError = sessionBootstrapDone && !sessionId;
-
-  const discountPercent = cart.loyaltyDiscountPercent ?? 0;
-  const loyaltyTier =
-    discountPercent === 10 ? "Gold" :
-    discountPercent === 5 ? "Silver" :
-    (visitPhone.trim().length >= 10 ? "Bronze" : null);
-
   return (
-    <>
-      <div className="pageCanvas pageCanvas--home">
-        <section className="homeTop">
-          <div className="heroBlock heroBlock--compact">
-            <div className="heroBlock__head">
-              <div>
-                <p className="heroBlock__eyebrow">{BRAND_NAME} · scan &amp; go</p>
-                <h2 className="heroBlock__title">Scan in, style out</h2>
-                {loyaltyTier ? (
-                  <div className={`loyaltyBadge loyaltyBadge--${loyaltyTier.toLowerCase()}`}>
-                    {loyaltyTier} Member ({discountPercent}% Off)
-                  </div>
-                ) : null}
-              </div>
-              <div className="heroBlock__status">
-                {showConnecting ? (
-                  <span className="statusChip statusChip--pending">Connecting…</span>
-                ) : sessionId ? (
-                  <span className="statusChip statusChip--ok">Ready</span>
-                ) : (
-                  <span className="statusChip statusChip--warn">Offline</span>
-                )}
-              </div>
+    <div className="shopHome">
+      {/* Session Bootstrap Status Banner */}
+      {!sessionId && sessionBootstrapDone ? (
+        <div className="shopSessionBanner bg-blue-50 border border-blue-200 rounded-2xl p-4 mb-6 text-center">
+          <p className="text-sm font-bold text-slate-800 mb-2">Start your in-store shopping session to scan &amp; add items.</p>
+          <button
+            type="button"
+            className="bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs px-5 py-2.5 rounded-full transition-all shadow-sm"
+            onClick={() => void createSession()}
+          >
+            Start Active Session
+          </button>
+        </div>
+      ) : null}
+
+      {/* Hero Headline Section */}
+      <section className="shopHero text-center my-6">
+        <h1 className="shopHero__title font-display text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight mb-2">
+          Scan in, style out.
+        </h1>
+        <p className="shopHero__sub text-slate-600 text-sm md:text-base max-w-md mx-auto mb-4">
+          Scan apparel directly from the shelf and skip the register queues.
+        </p>
+
+        {sessionId && (
+          <div className="inline-flex items-center gap-2 bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-bold px-3.5 py-1.5 rounded-full">
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" /> Active Store Session
+          </div>
+        )}
+      </section>
+
+      {/* 2-Column Quick Action Cards Grid (Reference Screenshot) */}
+      <section className="shopQuickGrid grid grid-cols-1 md:grid-cols-2 gap-4 mb-10">
+        {/* SCAN BARCODE Card */}
+        <Link href="/shop/scan" className="shopQuickCard shopQuickCard--scan group relative overflow-hidden rounded-2xl p-6 bg-slate-900 border border-slate-800 text-white flex flex-col justify-between h-44 shadow-lg hover:border-blue-500 transition-all">
+          <div className="flex justify-center my-auto">
+            <div className="w-16 h-12 border-2 border-blue-500/60 rounded-xl flex items-center justify-center bg-slate-800/80 group-hover:scale-105 transition-transform">
+              <Barcode className="w-8 h-8 text-blue-400" />
             </div>
-            <p className="heroBlock__lede">Beep barcodes, browse the aisles, bounce when you&apos;re done.</p>
           </div>
-
-          <section className="quickLinks quickLinks--home" aria-label="Quick actions">
-            {sessionId ? (
-              <>
-                <Link href="/shop/scan" className="quickLink quickLink--accent">
-                  <span className="quickLink__icon" aria-hidden>
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                      <rect x="3" y="5" width="6" height="14" stroke="currentColor" strokeWidth="1.75" rx="1" />
-                      <rect x="15" y="5" width="6" height="14" stroke="currentColor" strokeWidth="1.75" rx="1" />
-                      <path d="M9 12h6" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" />
-                    </svg>
-                  </span>
-                  <span className="quickLink__label">Scan barcode</span>
-                </Link>
-                <Link href="/shop/search" className="quickLink">
-                  <span className="quickLink__icon" aria-hidden>
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                      <circle cx="11" cy="11" r="6.5" stroke="currentColor" strokeWidth="1.75" />
-                      <path d="M20 20l-4.2-4.2" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" />
-                    </svg>
-                  </span>
-                  <span className="quickLink__label">Search products</span>
-                </Link>
-              </>
-            ) : (
-              <>
-                <div className="quickLink quickLink--disabled">
-                  <span className="quickLink__label">Scan barcode</span>
-                  <span className="quickLink__hint">{showConnectionError ? "Connect first" : "Almost there…"}</span>
-                </div>
-                <div className="quickLink quickLink--disabled">
-                  <span className="quickLink__label">Search products</span>
-                  <span className="quickLink__hint">{showConnectionError ? "Connect first" : "Almost there…"}</span>
-                </div>
-              </>
-            )}
-          </section>
-        </section>
-
-        {sessionId && cartItemCount > 0 ? (
-          <div className="bagStrip">
-            <p className="bagStrip__text">{cartItemCount} item{cartItemCount === 1 ? "" : "s"} in your bag</p>
-            <Link href="/shop/cart" className="bagStrip__link">
-              Review bag →
-            </Link>
-            <button type="button" className="bagStrip__link bagStrip__link--btn" disabled={loading} onClick={() => void restoreCartFromBackup()}>
-              Restore saved bag
-            </button>
+          <div className="text-center mt-auto">
+            <div className="font-display font-extrabold text-base tracking-wider uppercase">SCAN BARCODE</div>
+            <div className="text-xs text-slate-400 font-medium">Point at price tag.</div>
           </div>
-        ) : null}
+        </Link>
 
-        <details className="visitPanel visitPanel--fold">
-          <summary className="visitPanel__summary">Optional phone for visit recovery</summary>
-          <p className="visitPanel__hint">Saved on this device only — reconnect on the same register if you switch phones.</p>
-          <div className="visitPanel__row">
-            <input
-              className="visitPanel__input"
-              type="tel"
-              inputMode="tel"
-              placeholder="10+ digit mobile"
-              value={visitPhone}
-              onChange={(e) => setVisitPhone(e.target.value)}
-              onBlur={() => {
-                if (visitPhone.trim().length >= 10) {
-                  localStorage.setItem("proflo-visit-phone", visitPhone.trim());
-                }
-              }}
-            />
-            <button
-              type="button"
-              className="btnGhost"
-              disabled={loading || visitPhone.trim().length < 10}
-              onClick={() => void recoverSessionByPhone(visitPhone)}
-            >
-              Find visit
-            </button>
+        {/* BROWSE CATALOGUE Card */}
+        <Link href="/shop/search" className="shopQuickCard shopQuickCard--browse group relative overflow-hidden rounded-2xl p-6 bg-slate-900 border border-slate-800 text-white flex flex-col justify-between h-44 shadow-lg hover:border-blue-500 transition-all">
+          <img
+            src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=800&q=80"
+            alt="Browse Catalogue"
+            className="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:scale-105 transition-transform duration-300"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-transparent" />
+          
+          <div className="relative z-10 mt-auto text-left">
+            <div className="font-display font-extrabold text-lg tracking-wider uppercase">BROWSE CATALOGUE</div>
+            <div className="text-xs text-slate-300 font-medium">EXPLORE NEW COLLECTIONS</div>
           </div>
-        </details>
+        </Link>
+      </section>
 
-        {showConnecting ? (
-          <p className="inlineNotice">Linking to this store…</p>
-        ) : showConnectionError ? (
-          <div className="panel panel--warn">
-            <p className="panel__title">Could not start your visit</p>
-            <p className="panel__text">{message || "We could not connect to the store. Check your connection and try again."}</p>
-            <button type="button" className="btnPrimary btnPrimary--full" disabled={loading} onClick={() => void retryConnect()}>
-              {loading ? "Retrying…" : "Try again"}
-            </button>
-          </div>
-        ) : null}
+      {/* TRENDING IN STORE Section */}
+      <section className="shopSection mb-10">
+        <div className="shopSection__header mb-4">
+          <h2 className="shopSection__title font-display text-xl font-extrabold text-slate-900 uppercase tracking-wide">
+            TRENDING IN STORE
+          </h2>
+          <p className="shopSection__subtitle text-xs text-slate-500">
+            Popular picks being scanned this hour
+          </p>
+        </div>
 
-        {catalogApiDown ? (
-          <div className="panel panel--warn">
-            <p className="panel__title">Store temporarily unavailable</p>
-            <p className="panel__text">We could not load products right now. Please try again in a moment.</p>
-            <button type="button" className="btnGhost btnGhost--full" disabled={catalogLoading} onClick={() => void loadCatalog()}>
-              {catalogLoading ? "Loading…" : "Retry"}
-            </button>
-          </div>
-        ) : null}
-
-        {highDemand.length > 0 ? (
-          <section className="railSection">
-            <div className="railSection__head">
-              <h3 className="railSection__title">Trending now</h3>
-              <p className="railSection__sub">Popular picks this hour — use arrows to browse</p>
-            </div>
-            <ProductRail
-              products={highDemand}
-              sessionId={sessionId}
-              loading={loading}
-              onAdd={(bc, q) => void handleAdd(bc, q)}
-              onOpen={setPreview}
-            />
-          </section>
-        ) : null}
-
-        {!catalogApiDown ? (
-        <section className="catalogSection">
-          <div className="catalogSection__head">
-            <h3 className="catalogSection__title">Shop by category</h3>
-            <p className="catalogSection__sub">{filtered.length} items</p>
-          </div>
-          <div className="categoryChips" role="tablist" aria-label="Category">
-            {categories.map((c) => (
-              <button
-                key={c}
-                type="button"
-                role="tab"
-                aria-selected={category === c}
-                className={`categoryChip${category === c ? " categoryChip--on" : ""}`}
-                onClick={() => setCategory(c)}
-              >
-                {c}
-              </button>
+        {catalogLoading ? (
+          <div className="flex gap-4 overflow-x-auto pb-4">
+            {[1, 2, 3].map((n) => (
+              <div key={n} className="w-60 h-72 rounded-2xl bg-slate-100 animate-pulse flex-shrink-0" />
             ))}
           </div>
-          {sizes.length > 1 ? (
-            <div className="categoryChips categoryChips--sub" role="tablist" aria-label="Size">
-              {sizes.map((s) => (
-                <button
-                  key={s}
-                  type="button"
-                  role="tab"
-                  aria-selected={sizeFilter === s}
-                  className={`categoryChip${sizeFilter === s ? " categoryChip--on" : ""}`}
-                  onClick={() => setSizeFilter(s)}
-                >
-                  {s === "All" ? "All sizes" : s}
-                </button>
-              ))}
-            </div>
-          ) : null}
-          {catalogLoading ? (
-            <p className="emptyCatalog">Loading products…</p>
-          ) : catalog.length === 0 ? (
-            <p className="emptyCatalog">Nothing on the shelves yet — scan a barcode or check back soon.</p>
-          ) : filtered.length === 0 ? (
-            <p className="emptyCatalog">No items in this category.</p>
-          ) : (
-            <div className="productGrid">
-              {filtered.map((p) => (
-                <ProductCard
-                  key={p.id}
-                  product={p}
-                  disabled={!sessionId || loading}
-                  loading={loading}
-                  onAdd={(bc, q) => void handleAdd(bc, q)}
-                  onOpen={setPreview}
-                />
-              ))}
-            </div>
-          )}
-        </section>
-        ) : null}
+        ) : highDemand.length > 0 ? (
+          <ProductRail
+            products={highDemand}
+            sessionId={sessionId}
+            loading={loading}
+            onAdd={(bc, qty) => void addToCart(bc, qty)}
+            onOpen={(p) => setPreview(p)}
+          />
+        ) : (
+          <p className="text-xs text-slate-500">No trending items loaded yet.</p>
+        )}
+      </section>
 
-        {message && !showConnectionError ? <div className="toast">{message}</div> : null}
-      </div>
+      {/* STORE CATALOGUE Section */}
+      <section className="shopSection mb-10">
+        <div className="shopSection__header mb-4">
+          <h2 className="shopSection__title font-display text-xl font-extrabold text-slate-900 uppercase tracking-wide">
+            STORE CATALOGUE
+          </h2>
+          <p className="shopSection__subtitle text-xs text-slate-500">
+            Showing {filtered.length} products
+          </p>
+        </div>
+
+        {/* Filter Pills Bar */}
+        <div className="flex flex-wrap gap-2 mb-6">
+          {categories.map((c) => (
+            <button
+              key={c}
+              type="button"
+              className={`px-4 py-1.5 rounded-full text-xs font-bold transition-all border ${
+                category === c
+                  ? "bg-blue-600 border-blue-600 text-white shadow-sm"
+                  : "bg-white border-slate-200 text-slate-700 hover:border-slate-300"
+              }`}
+              onClick={() => setCategory(c)}
+            >
+              {c}
+            </button>
+          ))}
+        </div>
+
+        {/* Product Grid */}
+        <div className="shopGrid grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {filtered.map((p) => (
+            <ProductCard
+              key={p.id}
+              product={p}
+              disabled={!sessionId || loading}
+              loading={loading}
+              onAdd={(bc, qty) => void addToCart(bc, qty)}
+              onOpen={(p) => setPreview(p)}
+            />
+          ))}
+        </div>
+      </section>
 
       <ProductPreviewModal
         product={preview}
@@ -338,10 +228,8 @@ export default function ShopHomePage() {
         onClose={() => setPreview(null)}
         disabled={!sessionId || loading}
         loading={loading}
-        onAdd={(bc, q) => {
-          void handleAdd(bc, q);
-        }}
+        onAdd={(bc, qty) => void addToCart(bc, qty)}
       />
-    </>
+    </div>
   );
 }

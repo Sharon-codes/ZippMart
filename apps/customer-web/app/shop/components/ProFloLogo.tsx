@@ -6,40 +6,53 @@ interface ProFloLogoProps {
   className?: string;
   size?: number;
   showText?: boolean;
+  lightText?: boolean;
 }
 
-export function ProFloLogo({ className = "", size = 24, showText = false }: ProFloLogoProps) {
+export function ProFloLogo({ className = "", size = 28, showText = true, lightText = false }: ProFloLogoProps) {
+  const textColor = lightText ? "#FFFFFF" : "currentColor";
+  const brandBlue = "#0052FF";
+
   return (
-    <div className={`proflo-logo ${className}`} style={{ display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
-      <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ flexShrink: 0 }}>
-        {/* Hexagon outline */}
+    <div className={`proflo-logo ${className}`} style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', textDecoration: 'none' }}>
+      <svg width={size} height={size} viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ flexShrink: 0 }}>
+        {/* Rounded Hexagon Outline */}
         <path
-          d="M12 2.2L20.5 7.1V16.9L12 21.8L3.5 16.9V7.1L12 2.2Z"
-          stroke="currentColor"
-          strokeWidth="2.0"
+          d="M16 3L27.25 9.5V22.5L16 29L4.75 22.5V9.5L16 3Z"
+          stroke={textColor}
+          strokeWidth="3.2"
           strokeLinejoin="round"
           strokeLinecap="round"
         />
-        {/* Curved blue arrow */}
+        {/* Curved Vibrant Blue Arrow */}
         <path
-          d="M8.5 16V12.2C8.5 10.7 9.5 9.7 11 9.7H14.5"
-          stroke="#0066FF"
-          strokeWidth="2.2"
+          d="M11 22V16.5C11 14.5 12.5 13 14.5 13H19.5"
+          stroke={brandBlue}
+          strokeWidth="3.5"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
         <path
-          d="M12.5 7.7L15 9.7L12.5 11.7"
-          stroke="#0066FF"
-          strokeWidth="2.2"
+          d="M16.5 10L19.5 13L16.5 16"
+          stroke={brandBlue}
+          strokeWidth="3.5"
           strokeLinecap="round"
           strokeLinejoin="round"
         />
       </svg>
       {showText && (
-        <span style={{ fontFamily: 'var(--font-display)', fontWeight: 800, letterSpacing: '-0.02em', fontSize: '1.25rem', textTransform: 'uppercase' }}>
-          <span style={{ color: 'currentColor' }}>PRO</span>
-          <span style={{ color: '#0066FF' }}>FLO</span>
+        <span style={{
+          fontFamily: 'var(--font-display)',
+          fontWeight: 800,
+          letterSpacing: '0.06em',
+          fontSize: `${size * 0.65}px`,
+          textTransform: 'uppercase',
+          lineHeight: 1,
+          display: 'inline-flex',
+          alignItems: 'center'
+        }}>
+          <span style={{ color: textColor }}>PRO</span>
+          <span style={{ color: brandBlue }}>FLO</span>
         </span>
       )}
     </div>
