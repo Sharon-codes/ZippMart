@@ -193,7 +193,7 @@ export default function CashierHomePage() {
 
   return (
     <div className="shell">
-      {/* ── Navy top bar ── */}
+      {/* ── Light top bar ── */}
       <header className="shell__topbar">
         <div className="shell__topbarBrand">
           <ProFloLogo size={30} showText />
@@ -202,7 +202,7 @@ export default function CashierHomePage() {
             <div className="shell__topbarSub">Cashier Workstation</div>
           </div>
         </div>
-        <Link href="/gate" style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "6px 14px", borderRadius: 8, border: "1px solid rgba(255,255,255,0.15)", background: "rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.75)", fontSize: 13, fontWeight: 600, textDecoration: "none" }}>
+        <Link href="/gate" className="shell__topbarLink">
           Gate scanner →
         </Link>
       </header>
