@@ -2092,19 +2092,12 @@ input:focus {
 
 .opsHqPage {
   min-height: 100vh;
-  background: 
-    radial-gradient(circle at 15% 15%, rgba(0, 82, 255, 0.15) 0%, transparent 45%),
-    radial-gradient(circle at 85% 85%, rgba(99, 102, 241, 0.15) 0%, transparent 45%),
-    #050B1B;
-  color: #F8FAFC;
+  display: flex;
+  background: #FFFFFF;
+  color: #0F172A;
   font-family: var(--font);
   position: relative;
   overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 48px 20px;
 }
 
 .opsHqPage__hexBg {
@@ -2114,123 +2107,151 @@ input:focus {
   width: 100%;
   height: 100%;
   pointer-events: none;
-  opacity: 0.55;
-  mix-blend-mode: plus-lighter;
+  opacity: 0.75;
 }
 
-.opsHqPage__content {
-  max-width: 960px;
-  width: 100%;
-  margin: 0 auto;
+.opsHqPage__brandPane {
+  flex: 1.25;
+  background: linear-gradient(135deg, #F5F8FF 0%, #E8EFFF 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 48px;
+  border-right: 1px solid rgba(0, 82, 255, 0.08);
+}
+
+.opsHqPage__brandContent {
+  max-width: 440px;
   position: relative;
   z-index: 2;
-  text-align: center;
+  text-align: left;
 }
 
-.opsHqPage__header {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 6px;
-  margin-bottom: 24px;
-}
-
-.opsHqPage__tagline {
+.opsHqPage__brandTagline {
   font-family: var(--font-display);
   font-size: 11px;
   font-weight: 800;
   letter-spacing: 0.15em;
-  color: #94A3B8;
+  color: #0052FF;
   text-transform: uppercase;
-  margin-top: 4px;
+  margin-top: 12px;
+  display: inline-block;
 }
 
-.opsHqPage__hero {
-  margin-bottom: 36px;
-}
-
-.opsHqPage__title {
+.opsHqPage__brandTitle {
   font-family: var(--font-display);
-  font-size: clamp(2.4rem, 4vw, 3.2rem);
+  font-size: clamp(2.4rem, 4.5vw, 3.4rem);
   font-weight: 800;
-  color: #FFFFFF;
-  letter-spacing: -0.03em;
-  margin: 0 0 12px;
+  color: #0A1931;
+  letter-spacing: -0.02em;
+  margin: 16px 0 8px;
 }
 
-.opsHqPage__sub {
-  font-size: 15.5px;
-  color: #94A3B8;
-  max-width: 580px;
-  margin: 0 auto 32px;
-  line-height: 1.55;
+.opsHqPage__brandSub {
+  font-size: 15px;
+  color: #475569;
+  line-height: 1.6;
+  margin-bottom: 32px;
 }
 
-.opsHqCard {
-  max-width: 520px;
-  margin: 0 auto;
-  background: rgba(15, 23, 42, 0.45);
-  backdrop-filter: blur(24px);
-  -webkit-backdrop-filter: blur(24px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+.opsHqPage__artWrapper {
+  margin-top: 40px;
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(0, 82, 255, 0.06);
   border-radius: 20px;
-  padding: 32px;
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+  padding: 24px;
+  box-shadow: 0 10px 30px rgba(0, 82, 255, 0.03);
+}
+
+.opsHqPage__formPane {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px;
+  background: #FFFFFF;
+  position: relative;
+  z-index: 5;
+}
+
+.opsHqPage__formWrapper {
+  width: 100%;
+  max-width: 380px;
+}
+
+.opsHqPage__formHeader {
+  margin-bottom: 32px;
+  text-align: left;
+}
+
+.opsHqPage__formTitle {
+  font-family: var(--font-display);
+  font-size: 1.85rem;
+  font-weight: 800;
+  color: #0A1931;
+  margin-bottom: 6px;
+}
+
+.opsHqPage__formSub {
+  font-size: 14px;
+  color: #64748B;
 }
 
 .opsHqForm {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 20px;
 }
 
 .opsHqForm__grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 .opsHqField {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 6px;
   text-align: left;
 }
 
 .opsHqField label {
   font-size: 11px;
   font-weight: 700;
-  color: #94A3B8;
+  color: #475569;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.05em;
 }
 
 .opsHqInput {
   width: 100%;
-  height: 44px;
+  height: 46px;
   padding: 0 14px;
   border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid #E2E8F0;
   font-size: 14.5px;
   font-family: var(--font);
-  background: rgba(255, 255, 255, 0.04);
-  color: #FFFFFF;
+  background: #FAFCFF;
+  color: #0F172A;
   outline: none;
   transition: all 150ms ease;
 }
 
 .opsHqInput:focus {
   border-color: #0052FF;
-  background: rgba(255, 255, 255, 0.08);
-  box-shadow: 0 0 0 3px rgba(0, 82, 255, 0.3);
+  background: #FFFFFF;
+  box-shadow: 0 0 0 3px rgba(0, 82, 255, 0.12);
 }
 
 .opsHqError {
   font-size: 12.5px;
-  color: #F87171;
+  color: #EF4444;
   margin: 0;
   font-weight: 600;
 }
+
 
 
 .opsHqSubmitBtn {

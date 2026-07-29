@@ -50,78 +50,91 @@ export default function Home() {
 
   return (
     <main className="opsHqPage">
-      {/* Background Hexagon Pattern */}
-      <div className="opsHqPage__hexBg">
-        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <pattern id="hexGridRoot" width="60" height="103.923" patternUnits="userSpaceOnUse">
-              <path d="M30 0 L60 17.32 L60 51.96 L30 69.28 L0 51.96 L0 17.32 Z" fill="none" stroke="#0052FF" strokeWidth="0.8" strokeOpacity="0.08" />
-              <path d="M30 51.96 L60 69.28 L60 103.92 L30 121.24 L0 103.92 L0 69.28 Z" fill="none" stroke="#0052FF" strokeWidth="0.8" strokeOpacity="0.08" />
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#hexGridRoot)" />
-        </svg>
-      </div>
-
-      {/* Decorative Retail Background Glow Accents */}
-      <div className="absolute top-10 left-10 w-96 h-96 bg-blue-400/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute top-1/3 right-10 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
-
-      <div className="opsHqPage__content">
-        {/* Top Brand Tagline */}
-        <div className="opsHqPage__header">
-          <ProFloLogo size={46} showText />
-          <span className="opsHqPage__tagline">SMART CHECKOUT. SMOOTH FLOW.</span>
+      {/* Left Pane: Decorative Brand & Illustration Area */}
+      <div className="opsHqPage__brandPane">
+        {/* Background Hexagon Pattern */}
+        <div className="opsHqPage__hexBg">
+          <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern id="hexGridRoot" width="60" height="103.923" patternUnits="userSpaceOnUse">
+                <path d="M30 0 L60 17.32 L60 51.96 L30 69.28 L0 51.96 L0 17.32 Z" fill="none" stroke="#0052FF" strokeWidth="0.8" strokeOpacity="0.08" />
+                <path d="M30 51.96 L60 69.28 L60 103.92 L30 121.24 L0 103.92 L0 69.28 Z" fill="none" stroke="#0052FF" strokeWidth="0.8" strokeOpacity="0.08" />
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#hexGridRoot)" />
+          </svg>
         </div>
 
-        {/* Hero Headline Section */}
-        <div className="opsHqPage__hero">
-          <h1 className="opsHqPage__title">Operations HQ</h1>
-          <p className="opsHqPage__sub">
+        <div className="opsHqPage__brandContent">
+          <ProFloLogo size={54} showText />
+          <span className="opsHqPage__brandTagline">SMART CHECKOUT. SMOOTH FLOW.</span>
+          <h2 className="opsHqPage__brandTitle">Operations HQ</h2>
+          <p className="opsHqPage__brandSub">
             Catalogue, inventory, counter tokens, receipts, and store KPIs—one unified command console for your retail deployment.
           </p>
 
-          {/* Quick Sign-In Form Box */}
-          <div className="opsHqCard">
-            <form onSubmit={(e) => void onSubmit(e)} className="opsHqForm">
-              <div className="opsHqForm__grid">
-                <div className="opsHqField">
-                  <label htmlFor="user-in">Username</label>
-                  <input
-                    id="user-in"
-                    className="opsHqInput"
-                    autoComplete="username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    placeholder="Enter username"
-                  />
-                </div>
+          <div className="opsHqPage__artWrapper">
+            {/* Elegant light vector graphic representing checkout flow */}
+            <svg viewBox="0 0 400 200" className="w-full max-w-[340px] opacity-90 mx-auto" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="20" y="40" width="100" height="120" rx="12" fill="white" stroke="#E2E8F0" strokeWidth="2" />
+              <rect x="280" y="40" width="100" height="120" rx="12" fill="white" stroke="#E2E8F0" strokeWidth="2" />
+              <path d="M130 100 H270" stroke="#0052FF" strokeWidth="2.5" strokeLinecap="round" strokeDasharray="6 6" />
+              <circle cx="120" cy="100" r="10" fill="#0052FF" />
+              <circle cx="280" cy="100" r="10" fill="#10B981" />
+              <rect x="40" y="65" width="60" height="6" rx="3" fill="#F1F5F9" />
+              <rect x="40" y="80" width="40" height="6" rx="3" fill="#F1F5F9" />
+              <rect x="300" y="65" width="60" height="6" rx="3" fill="#F1F5F9" />
+              <rect x="300" y="80" width="40" height="6" rx="3" fill="#F1F5F9" />
+            </svg>
+          </div>
+        </div>
+      </div>
 
-                <div className="opsHqField">
-                  <label htmlFor="pass-in">Password</label>
-                  <input
-                    id="pass-in"
-                    ref={passwordRef}
-                    className="opsHqInput"
-                    type="password"
-                    autoComplete="current-password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Enter password"
-                  />
-                </div>
+      {/* Right Pane: Login Form Area */}
+      <div className="opsHqPage__formPane">
+        <div className="opsHqPage__formWrapper">
+          <div className="opsHqPage__formHeader">
+            <h3 className="opsHqPage__formTitle">Welcome Back</h3>
+            <p className="opsHqPage__formSub">Please sign in to your administrator account.</p>
+          </div>
+
+          <form onSubmit={(e) => void onSubmit(e)} className="opsHqForm">
+            <div className="opsHqForm__grid">
+              <div className="opsHqField">
+                <label htmlFor="user-in">Username</label>
+                <input
+                  id="user-in"
+                  className="opsHqInput"
+                  autoComplete="username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  placeholder="Enter username"
+                />
               </div>
 
-              {error ? <p className="opsHqError">{error}</p> : null}
+              <div className="opsHqField">
+                <label htmlFor="pass-in">Password</label>
+                <input
+                  id="pass-in"
+                  ref={passwordRef}
+                  className="opsHqInput"
+                  type="password"
+                  autoComplete="current-password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Enter password"
+                />
+              </div>
+            </div>
 
-              <button type="submit" className="opsHqSubmitBtn" disabled={busy}>
-                {busy ? "Authenticating…" : "Sign in to admin"} <ArrowRight className="w-4 h-4 inline ml-1.5" />
-              </button>
-            </form>
-          </div>
+            {error ? <p className="opsHqError">{error}</p> : null}
+
+            <button type="submit" className="opsHqSubmitBtn" disabled={busy}>
+              {busy ? "Authenticating…" : "Sign in to admin"} <ArrowRight className="w-4 h-4 inline ml-1.5" />
+            </button>
+          </form>
         </div>
       </div>
     </main>
   );
 }
-
