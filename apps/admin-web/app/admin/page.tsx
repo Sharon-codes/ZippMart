@@ -49,6 +49,19 @@ export default function AdminLoginPage() {
 
   return (
     <main className="opsHqPage">
+      {/* Background Hexagon Pattern */}
+      <div className="opsHqPage__hexBg">
+        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <pattern id="hexGrid" width="60" height="103.923" patternUnits="userSpaceOnUse">
+              <path d="M30 0 L60 17.32 L60 51.96 L30 69.28 L0 51.96 L0 17.32 Z" fill="none" stroke="#0052FF" strokeWidth="0.75" strokeOpacity="0.06" />
+              <path d="M30 51.96 L60 69.28 L60 103.92 L30 121.24 L0 103.92 L0 69.28 Z" fill="none" stroke="#0052FF" strokeWidth="0.75" strokeOpacity="0.06" />
+            </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#hexGrid)" />
+        </svg>
+      </div>
+
       <div className="opsHqPage__content">
         {/* Top Brand Tagline */}
         <div className="opsHqPage__header">

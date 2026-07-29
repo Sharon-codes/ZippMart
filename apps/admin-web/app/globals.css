@@ -2092,9 +2092,10 @@ input:focus {
 
 .opsHqPage {
   min-height: 100vh;
-  background: radial-gradient(circle at center, rgba(10, 17, 40, 0.75) 0%, rgba(3, 7, 18, 0.95) 100%), url('/bg-artwork.png') no-repeat center center;
-  background-size: cover;
-  background-blend-mode: overlay;
+  background: 
+    radial-gradient(circle at 15% 15%, rgba(0, 82, 255, 0.15) 0%, transparent 45%),
+    radial-gradient(circle at 85% 85%, rgba(99, 102, 241, 0.15) 0%, transparent 45%),
+    #050B1B;
   color: #F8FAFC;
   font-family: var(--font);
   position: relative;
@@ -2107,7 +2108,14 @@ input:focus {
 }
 
 .opsHqPage__hexBg {
-  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  opacity: 0.55;
+  mix-blend-mode: plus-lighter;
 }
 
 .opsHqPage__content {
