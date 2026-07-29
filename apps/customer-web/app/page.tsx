@@ -336,9 +336,8 @@ export default function Home() {
       {/* Deep Obsidian Navy Sleek Footer */}
       <footer className="mFooterDeep">
         <div className="mFooterDeep__inner">
-          <ProFloLogo size={26} showText lightText />
           <nav className="mFooterDeep__links">
-            <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">Apply via WhatsApp (+91 87929 15564)</a>
+            <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">Apply via WhatsApp</a>
             <a href={mailtoUrl}>Apply via Email</a>
             <a href="#contact">Contact</a>
           </nav>

@@ -1778,6 +1778,20 @@ body {
   flex-wrap: wrap;
 }
 
+.mFooterDeep__logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.mFooterDeep__logoText {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 18px;
+  letter-spacing: 0.08em;
+  color: #FFFFFF;
+}
+
 .mFooterDeep__links {
   display: flex;
   align-items: center;
