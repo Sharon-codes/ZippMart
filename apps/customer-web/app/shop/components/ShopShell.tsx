@@ -42,7 +42,7 @@ export function ShopShell({ children }: { children: ReactNode }) {
         <header className="siteHeader sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/80 h-16 flex items-center px-4 md:px-8">
           <div className="siteHeader__inner max-w-6xl w-full mx-auto flex items-center justify-between">
             <Link href="/shop" className="siteHeader__brand flex items-center gap-2">
-              <ProFloLogo size={28} showText />
+              <ProFloLogo size={34} showText />
             </Link>
 
             <nav className="flex items-center gap-2">

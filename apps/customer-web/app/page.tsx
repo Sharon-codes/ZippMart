@@ -43,7 +43,7 @@ export default function Home() {
       <header className="mHeader">
         <div className="mHeader__inner">
           <Link href="/" aria-label="ProFlo Home" className="mHeader__logo">
-            <ProFloLogo size={32} showText />
+            <ProFloLogo size={42} showText />
           </Link>
           <nav className="mHeader__nav">
             <a href="#journey">Platform</a>

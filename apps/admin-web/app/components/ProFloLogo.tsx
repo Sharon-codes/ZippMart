@@ -25,11 +25,11 @@ export function ProFloLogo({ className = "", size = 28, showText = true, lightTe
     <svg
       width={size}
       height={size}
-      viewBox="590 25 240 260"
+      viewBox="15 25 170 170"
       className={className}
       style={{ display: "inline-block", verticalAlign: "middle" }}
     >
-      <image href="/logo.svg" x="0" y="0" width="1387" height="445" />
+      <image href="/logo.svg" x="0" y="0" width="763" height="233" />
     </svg>
   );
 }
