@@ -23,6 +23,7 @@ ENV HOSTNAME=0.0.0.0
 
 COPY --from=build /app/apps/admin-web/.next/standalone ./
 COPY --from=build /app/apps/admin-web/.next/static ./apps/admin-web/.next/static
+COPY --from=build /app/apps/admin-web/public ./apps/admin-web/public
 
 EXPOSE 7860
 CMD ["node", "apps/admin-web/server.js"]
