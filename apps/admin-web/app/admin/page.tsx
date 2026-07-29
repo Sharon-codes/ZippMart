@@ -65,7 +65,7 @@ export default function AdminLoginPage() {
         </div>
 
         <div className="opsHqPage__brandContent">
-          <ProFloLogo size={54} showText />
+          <ProFloLogo size={80} showText />
           <span className="opsHqPage__brandTagline">SMART CHECKOUT. SMOOTH FLOW.</span>
           <h2 className="opsHqPage__brandTitle">Operations HQ</h2>
           <p className="opsHqPage__brandSub">

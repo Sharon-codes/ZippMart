@@ -987,7 +987,7 @@ export default function AdminDashboardPage() {
       <div className="adminContainer">
         <div className="adminMobileHeader">
           <div className="adminSidebar__brand">
-            <ProFloLogo size={28} showText />
+            <ProFloLogo size={38} showText />
           </div>
           <button
             type="button"
@@ -1000,7 +1000,7 @@ export default function AdminDashboardPage() {
         </div>
         <aside className={`adminSidebar ${mobileSidebarOpen ? "adminSidebar--open" : ""}`}>
           <div className="adminSidebar__brand">
-            <ProFloLogo size={32} showText />
+            <ProFloLogo size={44} showText />
           </div>
           <div className="adminSidebar__meta">
             <div className="adminRolePill">

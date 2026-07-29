@@ -196,7 +196,7 @@ export default function CashierHomePage() {
       {/* ── Light top bar ── */}
       <header className="shell__topbar">
         <div className="shell__topbarBrand">
-          <ProFloLogo size={30} showText />
+          <ProFloLogo size={40} showText />
           <div>
             <div className="shell__topbarTitle">Counter Terminal</div>
             <div className="shell__topbarSub">Cashier Workstation</div>
