@@ -570,6 +570,14 @@ export default function AdminDashboardPage() {
     if (!token) router.replace("/admin");
   }, [router]);
 
+  useEffect(() => {
+    if (!message) return;
+    const timer = setTimeout(() => {
+      setMessage("");
+    }, 4000);
+    return () => clearTimeout(timer);
+  }, [message]);
+
   const loadProducts = useCallback(async () => {
     const resp = await fetch(`${apiBase}/v1/admin/products`, { headers: adminFetchHeaders() });
     if (resp.status === 401) {
@@ -649,6 +657,7 @@ export default function AdminDashboardPage() {
   }, [activeSection, authed, isManager, auditEntries.length, loadAudit]);
 
   function onSectionChange(section: AdminSection) {
+    setMessage("");
     setActiveSection(section);
     if (section === "audit" && isManager) void loadAudit();
     if (section === "inventory") void loadMovements();
