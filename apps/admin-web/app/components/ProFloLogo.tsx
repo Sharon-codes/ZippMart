@@ -12,7 +12,7 @@ export function ProFloLogo({ className = "", size = 28, showText = true, lightTe
     <>
       <path
         d="M0 0 C251.79 0 503.58 0 763 0 C763 76.89 763 153.78 763 233 C511.21 233 259.42 233 0 233 C0 156.11 0 79.22 0 0 Z "
-        fill={lightText ? "#FFFFFF" : "none"}
+        fill="none"
         transform="translate(0,0)"
       />
       <path

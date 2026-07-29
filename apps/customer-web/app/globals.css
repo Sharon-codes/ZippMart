@@ -1812,6 +1812,85 @@ body {
   }
 }
 
+@media (max-width: 768px) {
+  .mHeader {
+    height: 64px;
+    padding: 0 16px;
+  }
+  .mHeader__logo svg {
+    height: 34px !important;
+  }
+  .mHeader__nav a:not(.mHeader__cta) {
+    display: none;
+  }
+  .mHeader__nav {
+    gap: 12px;
+  }
+  .mHeader__cta {
+    padding: 8px 16px;
+    font-size: 12.5px;
+  }
+  .mFooterDeep {
+    padding: 24px 16px;
+  }
+  .mFooterDeep__inner {
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    gap: 16px;
+  }
+  .mFooterDeep__links {
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+}
+
+@media (max-width: 576px) {
+  .mHero {
+    padding: 40px 16px 60px;
+  }
+  .mHero__actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+  .mHero__actions a {
+    width: 100%;
+    text-align: center;
+  }
+  .mJourney {
+    padding: 60px 16px;
+  }
+  .mJourney__head {
+    margin-bottom: 32px;
+  }
+  .mStats {
+    padding: 0 16px 60px;
+  }
+  .mStats__card {
+    padding: 32px 20px;
+  }
+  .mStats__title {
+    font-size: 1.5rem;
+    margin-bottom: 24px;
+  }
+  .mStats__item {
+    min-width: 140px;
+  }
+  .mContact {
+    padding: 0 16px 60px;
+  }
+  .mContact__card {
+    padding: 24px 20px;
+    gap: 28px;
+  }
+  .mContact__formRow {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+}
+
 
 
 
