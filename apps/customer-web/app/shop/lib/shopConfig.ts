@@ -22,4 +22,8 @@ export type RecommendationProduct = {
   imageUrl?: string;
   taxPercent?: number;
   inStock?: number;
+  availableSizes?: string[];
+  availableColors?: string[];
+  minPrice?: number;
+  maxPrice?: number;
 };

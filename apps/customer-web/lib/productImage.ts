@@ -20,13 +20,20 @@ export function pickProductImageUrl(
 ): string | undefined {
   const a = apiUrl?.trim();
   const b = dbUrl?.trim();
-  const candidates = [a, b].filter(Boolean) as string[];
+  const candidates = [b, a].filter(Boolean) as string[];
 
   for (const c of candidates) {
-    if (isSupabaseStorageUrl(c) || (isPersistentHttpsUrl(c) && !c.includes("/uploads/"))) {
+    if (isSupabaseStorageUrl(c)) {
       return c;
     }
   }
+
+  for (const c of candidates) {
+    if (isPersistentHttpsUrl(c) && !c.includes("/uploads/")) {
+      return c;
+    }
+  }
+
   return a ?? b;
 }
 

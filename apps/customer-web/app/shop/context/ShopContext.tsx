@@ -10,7 +10,7 @@ import {
   useState,
   type ReactNode
 } from "react";
-import { fetchCatalogUnified } from "../../../lib/supabase/catalog";
+import { fetchCatalogUnified, groupProductsByStyle } from "../../../lib/supabase/catalog";
 import { resolveProductImageUrl } from "../../../lib/productImage";
 import { clearCartBackup, loadCartBackup, saveCartBackup } from "../../../lib/cartBackup";
 import {
@@ -586,10 +586,11 @@ export async function fetchHighDemand(): Promise<RecommendationProduct[]> {
     if (!resp.ok) return [];
     const data = await resp.json();
     const rows = (data.highDemand ?? []) as RecommendationProduct[];
-    return rows.map((p) => ({
+    const normalized = rows.map((p) => ({
       ...p,
       imageUrl: p.imageUrl?.trim() ? resolveProductImageUrl(p.imageUrl.trim()) : undefined
     }));
+    return groupProductsByStyle(normalized);
   } catch {
     return [];
   }

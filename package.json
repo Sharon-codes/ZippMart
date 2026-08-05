@@ -11,6 +11,7 @@
   "scripts": {
     "dev": "concurrently -n api,worker,customer,admin,cashier -c blue,magenta,green,yellow,cyan \"npm run dev -w services/api\" \"npm run dev -w services/worker\" \"npm run dev -w apps/customer-web\" \"npm run dev -w apps/admin-web\" \"npm run dev -w apps/cashier-web\"",
     "setup:api": "node -e \"const fs=require('fs');const p='services/api/.env';if(!fs.existsSync(p)){fs.copyFileSync('services/api/.env.example',p);console.log('Created',p,'— edit DATABASE_URL with your Supabase password');}else{console.log(p,'already exists');}\"",
+    "seed:catalog": "npm run seed:catalog -w services/api",
     "dev:customer": "npm run dev -w apps/customer-web",
     "dev:admin": "npm run dev -w apps/admin-web",
     "dev:cashier": "npm run dev -w apps/cashier-web",

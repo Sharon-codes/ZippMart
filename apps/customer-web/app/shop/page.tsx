@@ -80,7 +80,13 @@ export default function ShopHomePage() {
       list = list.filter((p) => (p.category ?? "").trim().toLowerCase() === category.toLowerCase());
     }
     if (sizeFilter !== "All") {
-      list = list.filter((p) => (p.size ?? "").trim() === sizeFilter);
+      list = list.filter((p) => {
+        const sizes = p.availableSizes;
+        if (sizes && sizes.length > 0) {
+          return sizes.includes(sizeFilter);
+        }
+        return (p.size ?? "").trim() === sizeFilter;
+      });
     }
     return list;
   }, [catalog, category, sizeFilter]);

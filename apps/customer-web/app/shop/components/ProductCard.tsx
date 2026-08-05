@@ -29,6 +29,8 @@ export function ProductCard({
   const d = product.discountPercent ?? 0;
   const onSale = d > 0;
   const list = product.listPrice ?? product.unitPrice;
+  const minPrice = product.minPrice ?? product.unitPrice;
+  const maxPrice = product.maxPrice ?? product.unitPrice;
   const imageSrc = resolveProductImageUrl(product.imageUrl);
   const [imgFailed, setImgFailed] = useState(false);
 
@@ -79,18 +81,29 @@ export function ProductCard({
           <p className="text-xs text-slate-500 font-medium mb-1">{product.category}</p>
         )}
 
-        {(product.size || product.color) && (
+        {(product.availableSizes?.length || product.availableColors?.length) ? (
+          <p className="text-xs text-slate-400 mb-3">
+            {product.availableColors && product.availableColors.length > 0 ? `${product.availableColors.join(" · ")} · ` : ""}
+            {product.availableSizes && product.availableSizes.length > 1
+              ? `Sizes: ${product.availableSizes.join(" · ")}`
+              : product.availableSizes && product.availableSizes.length === 1
+              ? `Size: ${product.availableSizes[0]}`
+              : product.availableColors && product.availableColors.length > 0
+              ? product.availableColors.join(" · ")
+              : ""}
+          </p>
+        ) : (product.size || product.color) ? (
           <p className="text-xs text-slate-400 mb-3">
             {[product.size, product.color].filter(Boolean).join(" · ")}
           </p>
-        )}
+        ) : null}
 
         {/* Pricing */}
         <div className="flex items-baseline gap-2 mb-4">
           <span className="text-lg font-extrabold text-blue-600 font-display">
-            ₹{product.unitPrice}
+            {minPrice !== maxPrice ? `₹${minPrice} - ₹${maxPrice}` : `₹${minPrice}`}
           </span>
-          {onSale && (
+          {onSale && minPrice === maxPrice && (
             <span className="text-xs text-slate-400 line-through font-medium">
               ₹{list}
             </span>
