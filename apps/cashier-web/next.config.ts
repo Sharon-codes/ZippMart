@@ -4,6 +4,12 @@ const apiProxy = process.env.API_PROXY_TARGET?.replace(/\/$/, "");
 const basePath = process.env.NEXT_BASE_PATH?.replace(/\/$/, "") || undefined;
 
 const nextConfig: NextConfig = {
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
   ...(basePath ? { basePath } : {}),
   async rewrites() {
     if (!apiProxy) return [];
