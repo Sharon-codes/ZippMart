@@ -49,43 +49,111 @@ export default function AdminLoginPage() {
   }
 
   return (
-    <main className="min-h-[100dvh] w-full flex flex-col items-center justify-center p-4 sm:p-6 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-slate-100 relative overflow-hidden font-sans">
-      {/* Ambient background glow effects */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[340px] sm:w-[500px] h-[340px] sm:h-[500px] bg-blue-600/15 rounded-full blur-[100px] pointer-events-none" />
-      <div className="absolute bottom-10 right-10 w-[240px] h-[240px] bg-emerald-500/10 rounded-full blur-[80px] pointer-events-none" />
-
+    <main
+      style={{
+        minHeight: "100dvh",
+        width: "100%",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: "16px",
+        background: "linear-gradient(135deg, #0a0f1e, #111827, #0a0f1e)",
+        color: "#f1f5f9",
+        position: "relative",
+        overflow: "hidden",
+        fontFamily: "sans-serif",
+      }}
+    >
       {/* Main Glassmorphic Login Card */}
-      <div className="w-full max-w-[420px] bg-slate-900/80 backdrop-blur-2xl border border-slate-800/80 rounded-3xl p-6 sm:p-8 shadow-2xl shadow-black/60 relative z-10 my-auto">
+      <div
+        style={{
+          width: "100%",
+          maxWidth: "420px",
+          background: "rgba(15,23,42,0.85)",
+          backdropFilter: "blur(24px)",
+          WebkitBackdropFilter: "blur(24px)",
+          border: "1px solid rgba(100,116,139,0.3)",
+          borderRadius: "24px",
+          padding: "28px",
+          boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.6)",
+          position: "relative",
+          zIndex: 10,
+          margin: "auto",
+        }}
+      >
         {/* Brand Header */}
-        <div className="flex flex-col items-center text-center mb-6 sm:mb-8">
-          <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-500 p-0.5 shadow-lg shadow-blue-500/25 mb-4 flex items-center justify-center">
-            <div className="w-full h-full bg-slate-950 rounded-[14px] flex items-center justify-center">
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", marginBottom: "28px" }}>
+          <div
+            style={{
+              width: "64px",
+              height: "64px",
+              borderRadius: "16px",
+              background: "linear-gradient(to top right, #2563eb, #6366f1)",
+              padding: "2px",
+              boxShadow: "0 10px 15px -3px rgba(59, 130, 246, 0.25)",
+              marginBottom: "16px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <div
+              style={{
+                width: "100%",
+                height: "100%",
+                background: "#020617",
+                borderRadius: "14px",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
               <ProFloLogo size={42} showText={false} />
             </div>
           </div>
 
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-xs font-semibold tracking-wide uppercase mb-2">
-            <ShieldCheck className="w-3.5 h-3.5" />
+          <div
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "6px",
+              padding: "4px 12px",
+              borderRadius: "9999px",
+              background: "rgba(59, 130, 246, 0.1)",
+              border: "1px solid rgba(59, 130, 246, 0.2)",
+              color: "#60a5fa",
+              fontSize: "12px",
+              fontWeight: 600,
+              letterSpacing: "0.05em",
+              textTransform: "uppercase",
+              marginBottom: "8px",
+            }}
+          >
+            <ShieldCheck style={{ width: "14px", height: "14px" }} />
             Operations HQ
           </div>
 
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
+          <h1 style={{ fontSize: "24px", fontWeight: 800, color: "#ffffff", letterSpacing: "-0.02em", margin: "0" }}>
             Admin Sign In
           </h1>
-          <p className="text-xs sm:text-sm text-slate-400 mt-1.5 leading-relaxed">
+          <p style={{ fontSize: "14px", color: "#94a3b8", marginTop: "6px", lineHeight: 1.6, margin: "6px 0 0 0" }}>
             Manage catalogue, tokens & store analytics
           </p>
         </div>
 
         {/* Login Form */}
-        <form onSubmit={(e) => void onSubmit(e)} className="space-y-4">
+        <form onSubmit={(e) => void onSubmit(e)} style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
           {/* Username Field */}
           <div>
-            <label htmlFor="admin-username-input" className="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">
+            <label
+              htmlFor="admin-username-input"
+              style={{ display: "block", fontSize: "12px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.05em", color: "#cbd5e1", marginBottom: "6px" }}
+            >
               Username
             </label>
-            <div className="relative">
-              <User className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+            <div style={{ position: "relative" }}>
+              <User style={{ position: "absolute", left: "14px", top: "50%", transform: "translateY(-50%)", width: "16px", height: "16px", color: "#94a3b8" }} />
               <input
                 id="admin-username-input"
                 type="text"
@@ -93,18 +161,33 @@ export default function AdminLoginPage() {
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 placeholder="Enter username"
-                className="w-full h-12 pl-10 pr-4 bg-slate-950/60 border border-slate-800 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 rounded-xl text-sm text-white placeholder-slate-500 outline-none transition-all"
+                style={{
+                  width: "100%",
+                  height: "48px",
+                  paddingLeft: "40px",
+                  paddingRight: "16px",
+                  background: "rgba(2, 6, 23, 0.6)",
+                  border: "1px solid #1e293b",
+                  borderRadius: "12px",
+                  fontSize: "14px",
+                  color: "#ffffff",
+                  outline: "none",
+                  boxSizing: "border-box",
+                }}
               />
             </div>
           </div>
 
           {/* Password Field */}
           <div>
-            <label htmlFor="admin-password-input" className="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-1.5">
+            <label
+              htmlFor="admin-password-input"
+              style={{ display: "block", fontSize: "12px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.05em", color: "#cbd5e1", marginBottom: "6px" }}
+            >
               Password
             </label>
-            <div className="relative">
-              <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
+            <div style={{ position: "relative" }}>
+              <Lock style={{ position: "absolute", left: "14px", top: "50%", transform: "translateY(-50%)", width: "16px", height: "16px", color: "#94a3b8" }} />
               <input
                 id="admin-password-input"
                 type={showPassword ? "text" : "password"}
@@ -112,23 +195,35 @@ export default function AdminLoginPage() {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Enter password"
-                className="w-full h-12 pl-10 pr-11 bg-slate-950/60 border border-slate-800 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 rounded-xl text-sm text-white placeholder-slate-500 outline-none transition-all"
+                style={{
+                  width: "100%",
+                  height: "48px",
+                  paddingLeft: "40px",
+                  paddingRight: "44px",
+                  background: "rgba(2, 6, 23, 0.6)",
+                  border: "1px solid #1e293b",
+                  borderRadius: "12px",
+                  fontSize: "14px",
+                  color: "#ffffff",
+                  outline: "none",
+                  boxSizing: "border-box",
+                }}
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-white transition-colors"
+                style={{ position: "absolute", right: "12px", top: "50%", transform: "translateY(-50%)", padding: "4px", color: "#94a3b8", background: "none", border: "none", cursor: "pointer" }}
                 aria-label={showPassword ? "Hide password" : "Show password"}
               >
-                {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                {showPassword ? <EyeOff style={{ width: "16px", height: "16px" }} /> : <Eye style={{ width: "16px", height: "16px" }} />}
               </button>
             </div>
           </div>
 
           {/* Error Message */}
           {error ? (
-            <div className="flex items-start gap-2 p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 text-xs font-medium">
-              <AlertCircle className="w-4 h-4 shrink-0 mt-0.5" />
+            <div style={{ display: "flex", alignItems: "flex-start", gap: "8px", padding: "12px", borderRadius: "12px", background: "rgba(239, 68, 68, 0.1)", border: "1px solid rgba(239, 68, 68, 0.2)", color: "#f87171", fontSize: "12px", fontWeight: 500 }}>
+              <AlertCircle style={{ width: "16px", height: "16px", flexShrink: 0, marginTop: "2px" }} />
               <span>{error}</span>
             </div>
           ) : null}
@@ -137,42 +232,79 @@ export default function AdminLoginPage() {
           <button
             type="submit"
             disabled={busy}
-            className="w-full h-12 mt-2 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 active:scale-[0.99] text-white font-bold text-sm rounded-xl shadow-lg shadow-blue-600/30 hover:shadow-blue-600/50 transition-all flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+            style={{
+              width: "100%",
+              height: "48px",
+              marginTop: "8px",
+              background: "linear-gradient(to right, #2563eb, #4f46e5)",
+              color: "#ffffff",
+              fontWeight: 700,
+              fontSize: "14px",
+              borderRadius: "12px",
+              border: "none",
+              boxShadow: "0 10px 15px -3px rgba(37, 99, 235, 0.3)",
+              cursor: busy ? "not-allowed" : "pointer",
+              opacity: busy ? 0.7 : 1,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "8px",
+            }}
           >
             {busy ? (
-              <span className="inline-flex items-center gap-2">
-                <svg className="animate-spin h-4 w-4 text-white" viewBox="0 0 24 24" fill="none">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
+              <span style={{ display: "inline-flex", alignItems: "center", gap: "8px" }}>
+                <svg style={{ animation: "spin 1s linear infinite", height: "16px", width: "16px", color: "#ffffff" }} viewBox="0 0 24 24" fill="none">
+                  <circle style={{ opacity: 0.25 }} cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                  <path style={{ opacity: 0.75 }} fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
                 </svg>
                 Authenticating...
               </span>
             ) : (
               <>
-                Sign In to Operations HQ <ArrowRight className="w-4 h-4" />
+                Sign In to Operations HQ <ArrowRight style={{ width: "16px", height: "16px" }} />
               </>
             )}
           </button>
         </form>
 
         {/* Quick Fill Pills */}
-        <div className="mt-6 pt-5 border-t border-slate-800/80">
-          <div className="flex items-center justify-between text-xs text-slate-400 mb-2.5">
-            <span className="font-medium">Quick Demo Sign In:</span>
-            <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+        <div style={{ marginTop: "24px", paddingTop: "20px", borderTop: "1px solid rgba(30, 41, 59, 0.8)" }}>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", fontSize: "12px", color: "#94a3b8", marginBottom: "10px" }}>
+            <span style={{ fontWeight: 500 }}>Quick Demo Sign In:</span>
+            <Sparkles style={{ width: "14px", height: "14px", color: "#fbbf24" }} />
           </div>
-          <div className="grid grid-cols-2 gap-2">
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px" }}>
             <button
               type="button"
               onClick={() => handleQuickFill("admin", "admin123")}
-              className="px-3 py-2 bg-slate-800/60 hover:bg-slate-800 border border-slate-700/60 rounded-lg text-xs font-semibold text-slate-300 hover:text-white transition-all text-center"
+              style={{
+                padding: "8px 12px",
+                background: "rgba(30, 41, 59, 0.6)",
+                border: "1px solid rgba(51, 65, 85, 0.6)",
+                borderRadius: "8px",
+                fontSize: "12px",
+                fontWeight: 600,
+                color: "#cbd5e1",
+                cursor: "pointer",
+                textAlign: "center",
+              }}
             >
               👑 Super Admin
             </button>
             <button
               type="button"
               onClick={() => handleQuickFill("staff", "staff123")}
-              className="px-3 py-2 bg-slate-800/60 hover:bg-slate-800 border border-slate-700/60 rounded-lg text-xs font-semibold text-slate-300 hover:text-white transition-all text-center"
+              style={{
+                padding: "8px 12px",
+                background: "rgba(30, 41, 59, 0.6)",
+                border: "1px solid rgba(51, 65, 85, 0.6)",
+                borderRadius: "8px",
+                fontSize: "12px",
+                fontWeight: 600,
+                color: "#cbd5e1",
+                cursor: "pointer",
+                textAlign: "center",
+              }}
             >
               🏷️ Store Staff
             </button>
@@ -181,9 +313,15 @@ export default function AdminLoginPage() {
       </div>
 
       {/* Footer */}
-      <footer className="mt-6 text-center text-xs text-slate-500 font-medium">
+      <footer style={{ marginTop: "24px", textAlign: "center", fontSize: "12px", color: "#64748b", fontWeight: 500 }}>
         ProFlo Checkout System &bull; Operations HQ Console
       </footer>
+      <style>{`
+        @keyframes spin {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+      `}</style>
     </main>
   );
 }

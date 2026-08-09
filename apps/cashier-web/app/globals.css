@@ -114,13 +114,55 @@ a:hover { text-decoration: underline; }
   width: 100%;
   background: #FFFFFF;
   border-bottom: 1px solid #E2E8F0;
-  padding: 0 24px;
-  height: 56px;
+  padding: 0 16px;
+  min-height: 52px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   flex-shrink: 0;
   color: #0F172A;
+  gap: 8px;
+  flex-wrap: nowrap;
+}
+
+@media (max-width: 480px) {
+  .shell__topbar {
+    padding: 8px 12px;
+    min-height: 48px;
+    gap: 6px;
+  }
+
+  .shell__topbarBrand {
+    gap: 8px;
+    min-width: 0;
+    flex: 1;
+  }
+
+  .shell__topbarBrand svg,
+  .shell__topbarBrand img {
+    width: 28px !important;
+    height: 28px !important;
+    flex-shrink: 0;
+  }
+
+  .shell__topbarTitle {
+    font-size: 13px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .shell__topbarSub {
+    font-size: 8px;
+    padding: 2px 6px;
+  }
+
+  .shell__topbarLink {
+    font-size: 11px;
+    padding: 5px 10px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
 }
 
 .shell__topbarBrand {
@@ -189,15 +231,8 @@ a:hover { text-decoration: underline; }
   padding: 24px 20px 48px;
 }
 
-/* Legacy .shell for backward compat */
-.shell {
-  width: 100%;
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 0 20px 40px;
-  min-height: 100dvh;
-  background: var(--bg);
-}
+/* Legacy .shell override removed — the first .shell definition (line 105) is the correct one */
+
 
 /* ==========================================================================
    Header Section (inside content)
@@ -686,6 +721,55 @@ a:hover { text-decoration: underline; }
   .cashierWorkspace__right {
     position: sticky;
     top: 88px;
+  }
+}
+
+/* ── Mobile optimisations ── */
+@media (max-width: 480px) {
+  .header__title {
+    font-size: 1.35rem;
+  }
+
+  .header__sub {
+    font-size: 12.5px;
+  }
+
+  .statsRow {
+    gap: 6px;
+  }
+
+  .statPill {
+    padding: 10px 6px;
+  }
+
+  .statPill__label {
+    font-size: 9px;
+    letter-spacing: 0.04em;
+  }
+
+  .statPill__value {
+    font-size: 1rem;
+    margin-top: 4px;
+  }
+
+  .queueChip {
+    padding: 5px 10px;
+    font-size: 12px;
+    gap: 5px;
+  }
+
+  .queueChip__amt {
+    font-size: 10px;
+  }
+
+  .lookup {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .lookup__input {
+    height: 44px;
+    font-size: 13px;
   }
 }
 

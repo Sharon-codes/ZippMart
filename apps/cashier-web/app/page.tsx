@@ -208,7 +208,7 @@ export default function CashierHomePage() {
       </header>
 
       {/* ── Main content ── */}
-      <div style={{ flex: 1, width: "100%", maxWidth: 1360, margin: "0 auto", padding: "28px 24px 56px" }}>
+      <div style={{ flex: 1, width: "100%", maxWidth: 1360, margin: "0 auto", padding: "20px 14px 40px" }}>
       <header className="header">
         <p className="header__eyebrow">Cashier</p>
         <h1 className="header__title">Order lookup</h1>
