@@ -66,7 +66,7 @@ export default function ShopHomePage() {
   }, [loadCatalog]);
 
   const categories = useMemo(() => {
-    const defaultCats = ["All", "Apparel", "Outerwear", "Dresses", "Shoes", "Bags"];
+    const defaultCats = ["All", "Apparel", "Outerwear", "Dresses", "Bottomwear", "Ethnicwear", "Activewear", "Accessories", "Shoes"];
     const s = new Set<string>(defaultCats);
     for (const p of catalog) {
       if (p.category?.trim()) s.add(p.category.trim());

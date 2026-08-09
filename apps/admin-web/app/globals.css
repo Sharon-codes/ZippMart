@@ -2326,9 +2326,77 @@ input:focus {
   padding: 20px;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
+  .opsHqPage {
+    flex-direction: column;
+    min-height: 100dvh;
+    height: auto;
+    overflow-y: auto;
+    background: #FFFFFF;
+  }
+
+  .opsHqPage__brandPane {
+    flex: none;
+    width: 100%;
+    padding: 32px 20px 24px;
+    border-right: none;
+    border-bottom: 1px solid rgba(0, 82, 255, 0.08);
+    text-align: center;
+  }
+
+  .opsHqPage__brandContent {
+    max-width: 100%;
+    margin: 0 auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .opsHqPage__brandTitle {
+    font-size: 2rem;
+    margin: 10px 0 6px;
+  }
+
+  .opsHqPage__brandSub {
+    font-size: 13.5px;
+    margin-bottom: 0;
+  }
+
+  .opsHqPage__artWrapper {
+    display: none;
+  }
+
+  .opsHqPage__formPane {
+    flex: 1;
+    width: 100%;
+    padding: 28px 20px 48px;
+    align-items: flex-start;
+  }
+
+  .opsHqPage__formWrapper {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .opsHqPage__formHeader {
+    text-align: center;
+    margin-bottom: 24px;
+  }
+
   .opsHqForm__grid {
-    grid-template-columns: 1fr;
+    width: 100%;
+  }
+
+  .opsHqInput {
+    height: 48px;
+    font-size: 15px;
+  }
+
+  .opsHqSubmitBtn {
+    height: 48px;
+    font-size: 15px;
+    width: 100%;
   }
 }
 
