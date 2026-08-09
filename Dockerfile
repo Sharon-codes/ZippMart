@@ -26,7 +26,7 @@ ENV NEXT_TELEMETRY_DISABLED=1
 
 RUN npm run build -w customer-web
 RUN npm run build -w admin-web
-RUN NEXT_BASE_PATH=/cashier npm run build -w cashier-web
+RUN npm run build -w cashier-web
 
 FROM node:22-alpine
 WORKDIR /app
