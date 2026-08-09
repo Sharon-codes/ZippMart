@@ -11,7 +11,9 @@ $SkipNames = @(
     "worker", "docs", "nlp-lab", "infra", "proposals", "supabase"
 )
 $SkipRelPaths = @(
-    "deploy/image.png"
+    "deploy/image.png",
+    "apps/customer-web/public/images/products",
+    "apps/admin-web/public/images/products"
 )
 
 $Token = $env:HF_TOKEN
@@ -23,7 +25,7 @@ if ($Token) {
 function Test-SkipRelPath([string]$RelPath) {
     $norm = ($RelPath -replace '\\', '/').TrimStart('/')
     foreach ($skip in $SkipRelPaths) {
-        if ($norm -eq $skip) { return $true }
+        if ($norm -eq $skip -or $norm.StartsWith("$skip/")) { return $true }
     }
     return $false
 }
