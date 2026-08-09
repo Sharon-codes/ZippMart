@@ -22,7 +22,11 @@ RUN npm run build -w @checkout/shared && npm run build -w api
 ENV API_PROXY_TARGET=http://127.0.0.1:4000
 ENV NEXT_PUBLIC_API_BASE_URL=/checkout-api
 
-RUN npm run build -w customer-web && npm run build -w admin-web && NEXT_BASE_PATH=/cashier npm run build -w cashier-web
+ENV NEXT_TELEMETRY_DISABLED=1
+
+RUN npm run build -w customer-web
+RUN npm run build -w admin-web
+RUN NEXT_BASE_PATH=/cashier npm run build -w cashier-web
 
 FROM node:22-alpine
 WORKDIR /app
