@@ -48,7 +48,7 @@ function getStyleGroupKey(product: RecommendationProduct): string {
   return product.name.trim().toLowerCase();
 }
 
-function groupProductsByStyle(products: RecommendationProduct[]): RecommendationProduct[] {
+export function groupProductsByStyle(products: RecommendationProduct[]): RecommendationProduct[] {
   const groups = new Map<string, RecommendationProduct>();
 
   for (const product of products) {
@@ -237,7 +237,7 @@ export async function fetchBrowseSuggestions(query: string, limit = 12): Promise
   return groupProductsByStyle((await fetchCatalogFromSupabase(t, cap))).slice(0, cap);
 }
 
-export { groupProductsByStyle };
+
 
 /** Top products by demand score (shown on search idle state). */
 export async function fetchPopularProducts(limit = 5): Promise<RecommendationProduct[]> {
